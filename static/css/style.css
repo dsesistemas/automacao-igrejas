@@ -1,0 +1,79 @@
+/* Estilos personalizados para o webapp da igreja */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.scene-btn {
+    height: 50px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.scene-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.scene-btn:active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+#search-results {
+    min-height: 300px;
+    white-space: pre-wrap;
+    font-size: 0.9rem;
+}
+
+.song-item {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.song-item:last-child {
+    border-bottom: none;
+}
+
+/* Status indicators */
+.status-connected {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.status-simulation {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+
+.status-error {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+/* Estilos para dispositivos móveis */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .btn {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    #search-results {
+        font-size: 0.8rem;
+    }
+}

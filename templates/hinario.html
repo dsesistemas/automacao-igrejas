@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hinário - Sistema para Igreja</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}">
+</head>
+<body class="bg-light">
+    <div class="container-fluid p-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">automacao-dse</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for("index") }}">Automação</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for("hinario") }}">Hinário</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for("logout") }}">Sair</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Status do OBS 
+        <div class="container mt-3">
+            <div class="alert alert-info" id="obs-status-alert">
+                <i class="bi bi-info-circle-fill me-2"></i>
+                <span id="obs-status-message">Verificando conexão com OBS Studio...</span>
+            </div>
+        </div>
+        -->
+        <div class="container mt-3">
+            <div class="row">
+                <!-- PREVIEW -->
+                <div class="col-md-12">
+                    <div class="card shadow">
+                        <div class="card-body p-0">
+                            <div class="ratio ratio-16x9">
+                                <!-- MODIFICAÇÃO: Elemento img para o preview -->
+                                <img id="obs-preview-image" src="" alt="Preview do OBS" class="img-fluid bg-dark" style="object-fit: contain;">
+                                <div id="obs-preview-loading" class="bg-light d-flex align-items-center justify-content-center position-absolute top-0 start-0 w-100 h-100">
+                                    <div class="spinner-border text-light" role="status">
+                                        <span class="visually-hidden">Carregando Preview...</span>
+                                    </div>
+                                </div>
+                                <div id="obs-preview-error" class="bg-dark text-danger d-flex align-items-center justify-content-center position-absolute top-0 start-0 w-100 h-100 d-none">
+                                    Erro ao carregar preview.
+                                </div>
+                                <!-- FIM DA MODIFICAÇÃO -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- LINK AUTOMAÇÃO -->
+                <div class="col-12 mb-0 mt-0">
+                    <div class="card shadow">
+                        <div class="card-body text-center">
+                            <a href="{{ url_for("index") }}" class="btn btn-lg btn-secondary">ACESSAR AUTOMAÇÃO</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- PESQUISA DE MÚSICAS -->
+                <div class="col-md-12 mb-0 mt-0">
+                    <div class="card shadow">
+                        <div class="card-header bg-secondary text-light">
+                            <h5 class="card-title mb-0">Pesquisar Música</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="search-form">
+                                <div class="mb-3">
+                                    <label for="search-input" class="form-label">Termo de busca:</label>
+                                    <input type="text" class="form-control" id="search-input" placeholder="Título, letra ou categoria">
+                                </div>
+                                <button type="submit" class="btn btn-secondary w-100">Buscar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- RESULTADO DE MÚSICAS -->
+                <div class="col-12 mb-0 mt-0">
+                    <div class="card shadow">
+                        <div class="card-header bg-secondary text-light">
+                            <h5 class="card-title mb-0">Resultado da Pesquisa</h5>
+                        </div>
+                        <div class="card-body" id="search-results">
+                            <p class="text-muted">Digite um termo e clique em buscar para ver os resultados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast para notificações -->
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+        <div id="notification-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="bi bi-secondary-circle-fill me-2"></i>
+                <strong class="me-auto">Notificação</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toast-message">
+                Mensagem de notificação
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for("static", filename="js/hinario.js") }}"></script>
+</body>
+</html>
