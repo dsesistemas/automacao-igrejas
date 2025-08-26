@@ -9,7 +9,7 @@ import logging
 # --- Configuração ---
 RELAY_PINS = {
     1: 2,  # Disjuntor 1
-    2: 17,  # Disjuntor 2
+    2: 18,  # Disjuntor 2
     3: 27,  # Disjuntor 3
     4: 22,  # Disjuntor 4
     5: 23,  # Disjuntor 5
@@ -39,7 +39,7 @@ def setup_gpio():
     for relay_num, pin in RELAY_PINS.items():
         GPIO.setup(pin, GPIO.OUT)
         GPIO.output(pin, INITIAL_STATE) # Define o estado inicial
-        logger.info(f"Relé {relay_num} (GPIO {pin}) configurado para estado inicial: {"ON" if INITIAL_STATE == GPIO.LOW else "OFF"}")
+        logger.info(f"Relé {relay_num} (GPIO {pin}) configurado para estado inicial: {'ON' if INITIAL_STATE == GPIO.LOW else 'OFF'}")
     logger.info("GPIO configurado com sucesso.")
 
 def cleanup_gpio():
