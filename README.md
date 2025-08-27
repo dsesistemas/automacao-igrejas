@@ -1,4 +1,4 @@
-# Automação DSE - Sistema de Automação para Igrejas
+# Automação Igrejas - Sistema de Automação para Igrejas
 
 Este sistema integra o controle do OBS Studio para transmissões e um sistema de controle de disjuntores via Raspberry Pi para automação de iluminação, além de um hinário digital para exibição de letras de músicas.
 
@@ -53,7 +53,9 @@ O sistema é composto por dois componentes principais:
    - Durante a instalação, marque a opção "Add Python to PATH"
 
 2. **Baixe os Arquivos do Projeto**:
-   - Baixe e extraia o arquivo ZIP do projeto em uma pasta de sua escolha (ex: `C:\automacao-dse (PC)` ou `~/automacao-dse (Raspberry Pi)`)
+   - Baixe e extraia o arquivo ZIP do projeto em uma pasta de sua escolha (ex: `C:\automacao-igrejas (PC)` ou `~/automacao-igrejas (Raspberry Pi)`)
+   - Download: https://github.com/dsesistemas/automacao-igrejas/archive/refs/heads/main.zip
+   - Renomeie a pasta `automacao-igrejas-main` para `automacao-igrejas`.
 
 3. **Abra o Terminal/Prompt de Comando**:
    - Windows: Pressione Win+R, digite `cmd` e pressione Enter
@@ -61,7 +63,7 @@ O sistema é composto por dois componentes principais:
 
 4. **Navegue até a Pasta do Projeto**:
    ```
-   cd caminho/para/automacao-dse
+   cd C:\automacao-igrejas
    ```
 
 ### 2. Configuração do Ambiente Virtual
@@ -85,6 +87,7 @@ O sistema é composto por dois componentes principais:
      ```
      source venv/bin/activate
      ```
+   - Mantenha o CMD ou terminal abertos, pois usaremos posteriormente.
 
 3. **Instale as Dependências**:
    ```
@@ -96,6 +99,8 @@ O sistema é composto por dois componentes principais:
 ### 3. Configuração da Aplicação
 
 1. **Configure a Conexão com o OBS Studio**:
+   - Caso ainda não tenha instalado o OBS Studio veja a seção ([Configuração do OBS Studio](#configuração-do-obs-studio))
+
    - Abra o arquivo `app.py` em um editor de texto
    - Localize as seguintes linhas:
      ```python
@@ -118,10 +123,10 @@ O sistema é composto por dois componentes principais:
 1. **Inicie o OBS Studio** (veja a seção [Configuração do OBS Studio](#configuração-do-obs-studio))
 
 2. **Execute a Aplicação Web**:
-   ```
-   python app.py
-   ```
-
+   - No CMD ou terminal onde você ativou o ambiente virtual (venv) digite o comando:
+      ```
+      python app.py
+      ```
 3. **Acesse a Interface Web**:
    - No mesmo PC: Abra o navegador e acesse `http://localhost:5000`
    - Em outros dispositivos na mesma rede: `http://IP_DO_PC:5000`
@@ -139,6 +144,7 @@ O sistema é composto por dois componentes principais:
    sudo apt update
    sudo apt upgrade -y
    ```
+   - Configurar IP fixo no Rpberry usando nmtui no terminal ou usando a interface gráfica.
 
 2. **Instale as Dependências do Sistema**:
    ```bash
@@ -147,15 +153,16 @@ O sistema é composto por dois componentes principais:
 
 3. **Crie uma Pasta para o Projeto**:
    ```bash
-   mkdir -p ~/automacao-dse
-   cd ~/automacao-dse
+   mkdir -p ~/automacao-igrejas
+   cd ~/automacao-igrejas
    ```
 
 ### 2. Configuração do Script de Controle de Relés
 
-1. **Copie o Arquivo `relay_api.py`**:
-   - Transfira o arquivo `relay_api.py` do PC para o Raspberry Pi
-   - Você pode usar SCP, USB, ou copiar e colar o conteúdo
+1. **Baixe o Arquivo `relay_api.py`**:
+   ```bash
+   wget https://raw.github.com/dsesistemas/automacao-igrejas/main/relay_api.py
+   ```
 
 2. **Crie um Ambiente Virtual**:
    ```bash
@@ -163,8 +170,9 @@ O sistema é composto por dois componentes principais:
    source venv/bin/activate
    ```
 
-3. **Instale as Dependências**:
+3. **Baixe o arquivo "requirements_raspberry.txt" e Instale as Dependências**:
    ```bash
+   wget https://raw.github.com/dsesistemas/automacao-igrejas/main/requirements_raspberry.txt
    pip install -r requirements_raspberry.txt
    ```
    
@@ -217,20 +225,21 @@ Se precisar alterar esta configuração:
 
 ### 5. Execução da API de Relés
 
-1. **Execute o Script**:
-   ```bash
-   python3 relay_api.py
-   ```
-
-2. **Verifique o Funcionamento**:
-   - O servidor será iniciado na porta 5001
-   - Todos os relés serão inicializados como ligados (ON)
-
-3. **Anote o Endereço IP do Raspberry Pi**:
+1. **Anote o Endereço IP do Raspberry Pi**:
    ```bash
    hostname -I
    ```
    - Use este IP para configurar o `app.py` no PC
+   
+
+2. **Execute o Script**:
+   ```bash
+   python3 relay_api.py
+   ```
+   
+3. **Verifique o Funcionamento**:
+   - O servidor será iniciado na porta 5001
+   - Todos os relés serão inicializados como ligados (ON)
 
 ## Configuração do OBS Studio
 
@@ -290,7 +299,7 @@ Se precisar alterar esta configuração:
 ### 2. Configuração do Firewall
 
 1. **No Raspberry Pi**:
-   - Certifique-se que a porta 5001 está liberada:
+   - Caso esteja utilizando firewall, certifique-se que a porta 5001 está liberada:
      ```bash
      sudo ufw allow 5001/tcp
      ```
@@ -307,14 +316,6 @@ Se precisar alterar esta configuração:
      ```
    - Deve retornar um JSON com o status de todos os relés
    - Exemplo: `{"status":{"1":"on","2":"on","3":"on","4":"on","5":"on","6":"on"},"success":true}`
-
-2. **Teste o Controle de um Relé**:
-   - No navegador, acesse:
-     ```
-     http://IP_DO_RASPBERRY_PI:5001/relay/control?relay_id=1&state=off
-     ```
-   - O relé 1 deve desligar
-   - Verifique a resposta JSON para confirmar
 
 ## Uso do Hinário (Banco de Dados songs.db)
 
@@ -412,7 +413,7 @@ Para importar muitas músicas de uma vez:
    - Cole o seguinte código (ajuste os caminhos conforme necessário):
      ```batch
      @echo off
-     cd /d C:\caminho\para\automacao-dse
+     cd /d C:\automacao-igrejas
      call venv\Scripts\activate
      python app.py
      pause
@@ -421,8 +422,8 @@ Para importar muitas músicas de uma vez:
 
 2. **Configure o Task Scheduler**:
    - Pressione Win+R, digite `taskschd.msc` e pressione Enter
-   - Clique em "Criar Tarefa Básica" no painel direito
-   - Dê um nome como "Automacao DSE"
+   - em ações clique em "Criar Tarefa Básica" no painel shudireito
+   - Dê um nome como "Automacao Igrejas"
    - Selecione "Quando o computador é iniciado"
    - Escolha "Iniciar um programa"
    - Navegue até o arquivo .bat que você criou
@@ -444,9 +445,9 @@ Para importar muitas músicas de uma vez:
    After=network.target
 
    [Service]
-   User=pi
-   WorkingDirectory=/home/pi/automacao-dse
-   ExecStart=/home/pi/automacao-dse/venv/bin/python /home/pi/automacao-dse/relay_api.py
+   User=dse
+   WorkingDirectory=/home/dse/automacao-igrejas
+   ExecStart=/home/dse/automacao-igrejas/venv/bin/python /home/dse/automacao-igrejas/relay_api.py
    Restart=always
    RestartSec=10
 
